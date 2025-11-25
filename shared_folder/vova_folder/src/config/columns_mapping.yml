@@ -1,0 +1,103 @@
+Gender:
+  description_en: "Gender"
+  description_ru: "Пол"
+  short_ru: "Пол"
+  group_ru: "Дополнительные переменные"
+Age:
+  description_en: "Age"
+  description_ru: "Возраст"
+  short_ru: "Возраст"
+  group_ru: "Дополнительные переменные"
+Height:
+  description_en: "Height"
+  description_ru: "Рост"
+  short_ru: "Рост"
+  group_ru: "Дополнительные переменные"
+Weight:
+  description_en: "Weight"
+  description_ru: "Вес"
+  short_ru: "Вес"
+  group_ru: "Дополнительные переменные"
+family_history_with_overweight:
+  description_en: "Family history with overweight"
+  description_ru: "История ожирения в семье"
+  short_ru: "Ожирение в семье"
+  group_ru: "Дополнительные переменные"
+FAVC:
+  description_en: "Frequent consumption of high caloric food"
+  description_ru: "Частое употребление высококалорийной пищи"
+  short_ru: "Жирная еда"
+  group_ru: "Признаки пищевых привычек"
+FCVC:
+  description_en: "Frequency of consumption of vegetables"
+  description_ru: "Частота употребления овощей"
+  short_ru: "Овощи"
+  group_ru: "Признаки пищевых привычек"
+NCP:
+  description_en: "Number of main meals"
+  description_ru: "Количество основных приемов пищи"
+  short_ru: "Приёмы пищи"
+  group_ru: "Признаки пищевых привычек"
+CAEC:
+  description_en: "Consumption of food between meals"
+  description_ru: "Перекусы между приемами пищи"
+  short_ru: "Перекусы"
+  group_ru: "Признаки пищевых привычек"
+  order:
+    - "no"
+    - "Sometimes"
+    - "Frequently"
+    - "Always"
+SMOKE:
+  description_en: "Smoke"
+  description_ru: "Курение"
+  short_ru: "Курение"
+  group_ru: "Дополнительные переменные"
+CH2O:
+  description_en: "Consumption of water daily"
+  description_ru: "Потребление воды в день"
+  short_ru: "Вода"
+  group_ru: "Признаки пищевых привычек"
+SCC:
+  description_en: "Calories consumption monitoring"
+  description_ru: "Самоконтроль потребления калорий"
+  short_ru: "Монит. калорий"
+  group_ru: "Признаки физического состояния"
+FAF:
+  description_en: "Physical activity frequency"
+  description_ru: "Частота физической активности"
+  short_ru: "Физ. активность"
+  group_ru: "Признаки физического состояния"
+TUE:
+  description_en: "Time using technology devices"
+  description_ru: "Время использования электронных устройств"
+  short_ru: "Гаджеты"
+  group_ru: "Признаки физического состояния"
+CALC:
+  description_en: "Consumption of alcohol"
+  description_ru: "Употребление алкоголя"
+  short_ru: "Алкоголь"
+  group_ru: "Признаки пищевых привычек"
+  order:
+    - "no"
+    - "Sometimes"
+    - "Frequently"
+    - "Always"
+MTRANS:
+  description_en: "Transportation used"
+  description_ru: "Используемый транспорт"
+  short_ru: "Транспорт"
+  group_ru: "Признаки физического состояния"
+NObeyesdad:
+  description_en: "Obesity level"
+  description_ru: "Уровень ожирения"
+  short_ru: "Уровень ожир."
+  group_ru: "Целевая переменная"
+  order:
+    - "Insufficient_Weight"
+    - "Normal_Weight"
+    - "Overweight_Level_I"
+    - "Overweight_Level_II"
+    - "Obesity_Type_I"
+    - "Obesity_Type_II"
+    - "Obesity_Type_III"
