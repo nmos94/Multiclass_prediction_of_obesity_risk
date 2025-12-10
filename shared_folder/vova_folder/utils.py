@@ -62,19 +62,24 @@ def load_csv(
 
 
 def _rename_columns(df: pd.DataFrame, column_names: Optional[str]) -> pd.DataFrame:
-    """Rename columns using mapping from YAML; supports short_names/long_names."""
-    if column_names not in {"short_names", "long_names", None}:
-        raise ValueError("column_names must be 'short_names', 'long_names', or None")
+    """
+    Rename columns using mapping from YAML.
 
+    If ``column_names`` is None — no переименование.
+    If строка — берётся значение по этому ключу из маппинга (например,
+    ``short_ru``, ``description_ru``, ``description_en`` или любой новый
+    ключ, который появится в YAML).
+    """
     if column_names is None:
         return df
 
     mapping = load_columns_mapping()
-    if column_names == "short_names":
-        rename_map = {col: meta.get("short_ru", col) for col, meta in mapping.items()}
-    else:
-        rename_map = {col: meta.get("description_ru", col) for col, meta in mapping.items()}
-
+    rename_map = {}
+    for col, meta in mapping.items():
+        if isinstance(meta, dict):
+            rename_map[col] = meta.get(column_names, col)
+    # Если в df есть колонки, отсутствующие в маппинге, оставляем их как есть.
+    rename_map.update({col: col for col in df.columns if col not in rename_map})
     return df.rename(columns=rename_map)
 
 
@@ -94,13 +99,34 @@ def load_clean_df(
 ) -> pd.DataFrame:
     """
     Load and clean the raw dataset by removing duplicate rows and
-    resetting the index. Returns a fresh DataFrame.
+    resetting the index. Adds укрупнённую целевую переменную
+    ``NObeyesdad_norm`` согласно маппингу в columns_mapping.yml.
+    Returns a fresh DataFrame.
 
     Args:
         column_names: optional renaming scheme: "short_names", "long_names", or None.
     """
-    df = load_raw_df(column_names=column_names)
-    return df.drop_duplicates().reset_index(drop=True)
+    # Всегда работаем с исходными именами колонок, затем переименовываем в конце.
+    df = load_raw_df(column_names=None)
+    df = df.drop_duplicates().reset_index(drop=True)
+
+    # Добавляем агрегированную целевую переменную, если есть маппинг.
+    mapping = load_columns_mapping()
+    norm_mapping = mapping.get("NObeyesdad_norm", {}).get("mapping", {})
+    if "NObeyesdad" in df.columns and norm_mapping:
+        df["NObeyesdad_norm"] = df["NObeyesdad"].map(norm_mapping)
+
+    # Добавляем индекс массы тела (BMI), если доступны вес и рост.
+    if {"Weight", "Height"}.issubset(df.columns):
+        height_sq = pd.to_numeric(df["Height"], errors="coerce") ** 2
+        weight = pd.to_numeric(df["Weight"], errors="coerce")
+        df["BMI"] = weight / height_sq
+        df["BMI"] = df["BMI"].replace([float("inf"), -float("inf")], pd.NA)
+
+    # Переименовываем колонки согласно маппингу, если указана схема.
+    df = _rename_columns(df, column_names)
+
+    return df
 
 
 __all__ = [
